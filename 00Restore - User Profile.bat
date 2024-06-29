@@ -46,7 +46,7 @@ echo F | Xcopy "%drv%:\%id%\AppData\Local\Microsoft\Edge\User Data\Default\Bookm
 
 :: Import print management printers
 echo Importing print management printers...
-c:\windows\system32\spool\tools\PrintBrm.exe -r -f "%drv%:\%id%\printers\PrinterExport.printerExport" -O FORCE
+c:\windows\system32\spool\tools\PrintBrm.exe -r -f %drv%:\%id%\printers\PrinterExport.printerExport -O FORCE
 if %errorlevel% neq 0 (
     echo Failed to import printers.
     exit /b 1
