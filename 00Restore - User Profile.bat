@@ -3,6 +3,8 @@ color 2
 echo DIT Restore User Script
 echo DO NOT RESTORE UNLESS THE USER HAS LOGGED ON THE COMPUTER AT LEAST ONCE!
 echo.
+echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
+echo.
 
 :verify_drive
 set /p drv="Enter drive letter of your external drive: "
@@ -23,6 +25,8 @@ echo.
 c:
 
 :: Copy these destinations
+echo Restoring signatures...
+Xcopy "%drv%:\%id%\AppData\Local\Microsoft\Signatures" "C:\users\%id%\AppData\Local\Microsoft\Signatures" /E /C /I /Y /Q
 echo Restoring Desktop...
 Xcopy "%drv%:\%id%\Desktop" "C:\users\%id%\Desktop" /E /C /I /Y /Q
 echo Restoring Documents...
@@ -104,5 +108,11 @@ echo Importing PST files into Outlook...
 PowerShell -ExecutionPolicy Bypass -File %psScriptPath% -pstDirectory1 "%userDirectory1%" -pstDirectory2 "%userDirectory2%"
 
 echo All files have been successfully restored and PST files have been imported.
+
+:: Run checkcert in a new window
+start "" "\\ditfp1\helpdesk\!SHORTCUTS!\checkCert.bat"
+
+:: Run Image retriever in a new window
+start "Exit Me" "\\Ditfp1\helpdesk\PaperPort\CCHSCAN1\ImageRetrieverFix5.cmd"
 
 pause

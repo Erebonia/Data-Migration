@@ -3,6 +3,8 @@ color 2
 echo DIT - Backup User Script
 echo Saving: Desktop, Documents, Favorites, Pictures, Downloads, Edge/Chrome bookmarks, and Printers
 echo.
+echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
+echo.
 
 :verify_drive
 set /p drv="Enter Drive Letter you want to save this data: "
@@ -24,6 +26,8 @@ echo.
 c:
 
 :: Copy user data to the drive
+echo Copying Signatures...
+Xcopy C:\users\%id%\AppData\Local\Microsoft\Signatures %drv%:\%id%\AppData\Local\Microsoft\Signatures /E /C /I /Y /Q
 echo Copying Desktop...
 Xcopy C:\users\%id%\Desktop %drv%:\%id%\Desktop /E /C /I /Y /Q
 echo Copying Documents...

@@ -3,6 +3,8 @@ color 2
 echo DIT Restore User Script
 echo DO NOT RESTORE UNLESS THE USER HAS LOGGED ON THE COMPUTER AT LEAST ONCE!
 echo.
+echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
+echo.
 
 :verify_drive
 set /p drv="Enter drive letter of your external drive: "

@@ -3,6 +3,8 @@ color 2
 echo DIT - Data Recovery Tool
 echo Saving: Desktop, Documents, Favorites, Pictures, Downloads, Edge/Chrome bookmarks, Outlook PSTs
 echo.
+echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
+echo.
 
 ::verify_recovery
 set /p rcv="Enter the drive letter we are recovering data from: "
