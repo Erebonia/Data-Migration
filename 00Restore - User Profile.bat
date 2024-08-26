@@ -24,29 +24,28 @@ echo.
 :: Set the drive to C
 c:
 
-:: Copy these destinations
+:: Restore user data
 echo Restoring signatures...
-Xcopy "%drv%:\%id%\AppData\Local\Microsoft\Signatures" "C:\users\%id%\AppData\Local\Microsoft\Signatures" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\AppData\Local\Microsoft\Signatures" "C:\users\%id%\AppData\Local\Microsoft\Signatures" /MIR /R:3 /W:5
 echo Restoring Desktop...
-Xcopy "%drv%:\%id%\Desktop" "C:\users\%id%\Desktop" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Desktop" "C:\users\%id%\Desktop" /MIR /R:3 /W:5
 echo Restoring Documents...
-Xcopy "%drv%:\%id%\Documents" "C:\users\%id%\Documents" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Documents" "C:\users\%id%\Documents" /MIR /R:3 /W:5
 echo Restoring Favorites...
-Xcopy "%drv%:\%id%\Favorites" "C:\users\%id%\Favorites" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Favorites" "C:\users\%id%\Favorites" /MIR /R:3 /W:5
 echo Restoring Pictures...
-Xcopy "%drv%:\%id%\Pictures" "C:\users\%id%\Pictures" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Pictures" "C:\users\%id%\Pictures" /MIR /R:3 /W:5
 echo Restoring Downloads...
-Xcopy "%drv%:\%id%\Downloads" "C:\users\%id%\Downloads" /E /C /I /Y /Q
-echo Searching for Outlook PSTs...
-Xcopy "%drv%:\%id%\Outlook" "C:\users\%id%\Outlook" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Downloads" "C:\users\%id%\Downloads" /MIR /R:3 /W:5
+echo Restoring Outlook data...
+Robocopy "%drv%:\%id%\Outlook" "C:\users\%id%\Outlook" /MIR /R:3 /W:5
 
-:: Copy bookmarks from the external drive
-:: Utilize echo F to tell the program we are copying and pasting a file.
+:: Restore bookmarks
 echo Restoring Google Chrome bookmarks...
-echo F | Xcopy "%drv%:\%id%\AppData\Local\Google\Chrome\User Data\Default\Bookmarks" "C:\users\%id%\AppData\Local\Google\Chrome\User Data\Default\Bookmarks" /C /Y /Q
+Robocopy "%drv%:\%id%\AppData\Local\Google\Chrome\User Data\Default" "C:\users\%id%\AppData\Local\Google\Chrome\User Data\Default" "Bookmarks" /R:3 /W:5
 
 echo Restoring Microsoft Edge bookmarks...
-echo F | Xcopy "%drv%:\%id%\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks" "C:\users\%id%\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks" /C /Y /Q
+Robocopy "%drv%:\%id%\AppData\Local\Microsoft\Edge\User Data\Default" "C:\users\%id%\AppData\Local\Microsoft\Edge\User Data\Default" "Bookmarks" /R:3 /W:5
 
 :: Import print management printers
 echo Importing print management printers...
@@ -57,9 +56,9 @@ if %errorlevel% neq 0 (
 )
 echo Printer import completed.
 
-:: Copy PST files
+:: Copy PST files (if they are stored separately)
 echo Restoring PST files...
-Xcopy "%drv%:\%id%\Documents\Outlook Files\*.pst" "C:\Users\%id%\Documents\Outlook Files\" /C /Y /Q
+Robocopy "%drv%:\%id%\Documents\Outlook Files" "C:\Users\%id%\Documents\Outlook Files" *.pst /R:3 /W:5
 
 :: Set the path for the PowerShell script on the external drive
 set psScriptPath="%drv%:\Data Migration Script\import_pst.ps1"
@@ -98,7 +97,6 @@ echo     }
 echo }
 ) > %psScriptPath%
 
-
 :: Determine the user's directories
 set userDirectory1=C:\Users\%id%\Documents\Outlook Files
 set userDirectory2=C:\Users\%id%\Outlook
@@ -108,11 +106,5 @@ echo Importing PST files into Outlook...
 PowerShell -ExecutionPolicy Bypass -File %psScriptPath% -pstDirectory1 "%userDirectory1%" -pstDirectory2 "%userDirectory2%"
 
 echo All files have been successfully restored and PST files have been imported.
-
-:: Run checkcert in a new window
-start "" "\\ditfp1\helpdesk\!SHORTCUTS!\checkCert.bat"
-
-:: Run Image retriever in a new window
-start "Exit Me" "\\Ditfp1\helpdesk\PaperPort\CCHSCAN1\ImageRetrieverFix5.cmd"
 
 pause

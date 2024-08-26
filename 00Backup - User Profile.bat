@@ -27,27 +27,27 @@ c:
 
 :: Copy user data to the drive
 echo Copying Signatures...
-Xcopy C:\users\%id%\AppData\Local\Microsoft\Signatures %drv%:\%id%\AppData\Local\Microsoft\Signatures /E /C /I /Y /Q
+Robocopy C:\users\%id%\AppData\Local\Microsoft\Signatures %drv%:\%id%\AppData\Local\Microsoft\Signatures /MIR /R:3 /W:5
 echo Copying Desktop...
-Xcopy C:\users\%id%\Desktop %drv%:\%id%\Desktop /E /C /I /Y /Q
+Robocopy C:\users\%id%\Desktop %drv%:\%id%\Desktop /MIR /R:3 /W:5
 echo Copying Documents...
-Xcopy C:\users\%id%\Documents %drv%:\%id%\Documents /E /C /I /Y /Q 
+Robocopy C:\users\%id%\Documents %drv%:\%id%\Documents /MIR /R:3 /W:5
 echo Copying Favorites...
-Xcopy C:\users\%id%\Favorites %drv%:\%id%\Favorites /E /C /I /Y /Q
+Robocopy C:\users\%id%\Favorites %drv%:\%id%\Favorites /MIR /R:3 /W:5
 echo Copying Pictures...
-Xcopy C:\users\%id%\Pictures %drv%:\%id%\Pictures /E /C /I /Y /Q
+Robocopy C:\users\%id%\Pictures %drv%:\%id%\Pictures /MIR /R:3 /W:5
 echo Copying Downloads...
-Xcopy C:\users\%id%\Downloads %drv%:\%id%\Downloads /E /C /I /Y /Q
-echo Outlook PSTs
-Xcopy C:\Outlook\ %drv%:\%id%\Outlook /E /C /I /Y /Q
-Xcopy H:\Outlook\ %drv%:\%id%\Outlook /E /C /I /Y /Q
+Robocopy C:\users\%id%\Downloads %drv%:\%id%\Downloads /MIR /R:3 /W:5
+echo Copying Outlook PSTs...
+Robocopy C:\Outlook\ %drv%:\%id%\Outlook /MIR /R:3 /W:5
+Robocopy H:\Outlook\ %drv%:\%id%\Outlook /MIR /R:3 /W:5
 
 :: Copy bookmarks from C: drive to the external drive.
 echo Copying google chrome bookmarks...
-Xcopy "C:\users\%id%\AppData\Local\Google\Chrome\User Data\Default\Bookmarks" "%drv%:\%id%\AppData\Local\Google\Chrome\User Data\Default\Bookmarks\" /C /Y /Q 
+Robocopy "C:\users\%id%\AppData\Local\Google\Chrome\User Data\Default" "%drv%:\%id%\AppData\Local\Google\Chrome\User Data\Default" "Bookmarks" /R:3 /W:5
 
 echo Copying microsoft edge bookmarks...
-Xcopy "C:\users\%id%\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks" "%drv%:\%id%\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks\" /C /Y /Q 
+Robocopy "C:\users\%id%\AppData\Local\Microsoft\Edge\User Data\Default" "%drv%:\%id%\AppData\Local\Microsoft\Edge\User Data\Default" "Bookmarks" /R:3 /W:5
 
 :: Export print management printers
 echo Exporting print management printers...
