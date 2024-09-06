@@ -1,10 +1,8 @@
 @echo off
-color 2
-echo DIT Restore User Script
-echo DO NOT RESTORE UNLESS THE USER HAS LOGGED ON THE COMPUTER AT LEAST ONCE!
-echo.
-echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
-echo.
+color 0a
+Title Restore Data
+
+type "%~dp0Titles\restore.txt"
 
 :verify_drive
 set /p drv="Enter drive letter of your external drive: "
@@ -16,7 +14,7 @@ if not exist %drv%:\ (
 :verify_id
 set /p id="Enter User ID: "
 if not exist C:\users\%id% (
-    echo Invalid User ID
+    echo Invalid User ID. If this is a new computer, have them login first.
     goto verify_id
 )
 echo.
@@ -61,7 +59,7 @@ echo Restoring PST files...
 Robocopy "%drv%:\%id%\Documents\Outlook Files" "C:\Users\%id%\Documents\Outlook Files" *.pst /R:3 /W:5
 
 :: Set the path for the PowerShell script on the external drive
-set psScriptPath="%drv%:\Data Migration Script\import_pst.ps1"
+set psScriptPath="\\ditfp1\helpdesk\BN\Data Migration Script\import_pst.ps1"
 
 :: Generate PowerShell script for importing PST files
 echo Creating PowerShell script for PST import...

@@ -1,9 +1,11 @@
 @echo off
-color 2
-echo DIT - Backup User Script
-echo Saving: Desktop, Documents, Favorites, Pictures, Downloads, Edge/Chrome bookmarks, and Printers
+color 0a
+Title Backup Data
+
+type "%~dp0Titles\backup.txt"
 echo.
-echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
+echo.
+echo Saving: Desktop, Documents, Favorites, Pictures, Downloads, Edge/Chrome bookmarks, and Printers
 echo.
 
 :verify_drive
@@ -17,7 +19,7 @@ if not exist %drv%:\ (
 :verify_id
 set /p id="Enter User ID: "
 if not exist C:\users\%id% (
-    echo Invalid User ID
+    echo Invalid User ID. If this is a new computer, have them login first.
     goto verify_id
 )
 echo.

@@ -1,8 +1,8 @@
 @echo off
-color 2
+color 0a
+Title Backup Printers
 
-echo.
-echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
+type "%~dp0Titles\backup_printers.txt"
 echo.
 
 :verify_drive

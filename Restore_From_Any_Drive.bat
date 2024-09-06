@@ -1,9 +1,9 @@
 @echo off
-color 2
-echo DIT Restore User Script
+color 0a
+Title Restore Data
+
+type "%~dp0Titles\restore.txt"
 echo DO NOT RESTORE UNLESS THE USER HAS LOGGED ON THE COMPUTER AT LEAST ONCE!
-echo.
-echo !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!! !!! RUN AS ADMINISTRATOR !!!
 echo.
 
 :verify_drive
@@ -24,34 +24,33 @@ echo.
 :: Set the drive to C
 c:
 
-:: Copy these destinations
+:: Restore user data using Robocopy
 echo Restoring Desktop...
-Xcopy "%drv%:\%id%\Desktop" "C:\users\%id%\Desktop" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Desktop" "C:\users\%id%\Desktop" /E /Z /R:3 /W:5 /MT
 echo Restoring Documents...
-Xcopy "%drv%:\%id%\Documents" "C:\users\%id%\Documents" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Documents" "C:\users\%id%\Documents" /E /Z /R:3 /W:5 /MT
 echo Restoring Favorites...
-Xcopy "%drv%:\%id%\Favorites" "C:\users\%id%\Favorites" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Favorites" "C:\users\%id%\Favorites" /E /Z /R:3 /W:5 /MT
 echo Restoring Pictures...
-Xcopy "%drv%:\%id%\Pictures" "C:\users\%id%\Pictures" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Pictures" "C:\users\%id%\Pictures" /E /Z /R:3 /W:5 /MT
 echo Restoring Downloads...
-Xcopy "%drv%:\%id%\Downloads" "C:\users\%id%\Downloads" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Downloads" "C:\users\%id%\Downloads" /E /Z /R:3 /W:5 /MT
 echo Searching for Outlook PSTs...
-Xcopy "%drv%:\%id%\Outlook" "C:\users\%id%\Outlook" /E /C /I /Y /Q
+Robocopy "%drv%:\%id%\Outlook" "C:\users\%id%\Outlook" /E /Z /R:3 /W:5 /MT
 
 :: Copy bookmarks from the external drive
-:: Utilize echo F to tell the program we are copying and pasting a file.
 echo Restoring Google Chrome bookmarks...
-echo F | Xcopy "%drv%:\%id%\AppData\Local\Google\Chrome\User Data\Default\Bookmarks" "C:\users\%id%\AppData\Local\Google\Chrome\User Data\Default\Bookmarks" /C /Y /Q
+Robocopy "%drv%:\%id%\AppData\Local\Google\Chrome\User Data\Default" "C:\users\%id%\AppData\Local\Google\Chrome\User Data\Default" "Bookmarks" /Z /R:3 /W:5 /MT
 
 echo Restoring Microsoft Edge bookmarks...
-echo F | Xcopy "%drv%:\%id%\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks" "C:\users\%id%\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks" /C /Y /Q
+Robocopy "%drv%:\%id%\AppData\Local\Microsoft\Edge\User Data\Default" "C:\users\%id%\AppData\Local\Microsoft\Edge\User Data\Default" "Bookmarks" /Z /R:3 /W:5 /MT
 
 :: Copy PST files
 echo Restoring PST files...
-Xcopy "%drv%:\%id%\Documents\Outlook Files\*.pst" "C:\Users\%id%\Documents\Outlook Files\" /C /Y /Q
+Robocopy "%drv%:\%id%\Documents\Outlook Files" "C:\Users\%id%\Documents\Outlook Files" "*.pst" /Z /R:3 /W:5 /MT
 
 :: Set the path for the PowerShell script on the external drive
-set psScriptPath="%drv%:\Data Migration Script\import_pst.ps1"
+set psScriptPath="\\ditfp1\helpdesk\BN\Data Migration Script\import_pst.ps1"
 
 :: Generate PowerShell script for importing PST files
 echo Creating PowerShell script for PST import...
@@ -86,7 +85,6 @@ echo         Write-Output "Error: $_"
 echo     }
 echo }
 ) > %psScriptPath%
-
 
 :: Determine the user's directories
 set userDirectory1=C:\Users\%id%\Documents\Outlook Files
